@@ -34,12 +34,48 @@ body, html {
     border-radius: 20px;
     position: relative;
     overflow: hidden;
-    background: black;
+    background: rgb(0, 10, 20); /* Slightly lighter background */
     z-index: 1;
     display: flex;
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
+}
+
+/* Replace checkerboard with horizontal scanlines */
+.holoviewer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(120, 220, 255, 0.03) 0px,
+        rgba(120, 220, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 4px
+    );
+    animation: scanlineMove 20s linear infinite;
+    z-index: -1;
+}
+
+.holoviewer::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background: radial-gradient(
+        circle at center,
+        rgba(120, 220, 255, 0.05) 0%,
+        rgba(120, 220, 255, 0.02) 40%,
+        transparent 70%
+    );
+    animation: rotateGradient 30s linear infinite;
+    z-index: -1;
 }
 
 .holoviewer-title-container {
@@ -137,6 +173,8 @@ body, html {
     overflow: hidden;
     border-radius: 10px;
     border: 1px solid rgba(0, 195, 255, 0.2);
+    background: black; /* Solid black background */
+    z-index: 1; /* Ensure it's above the background effects */
 }
 
 .sidepanel-to-viewscreen {
@@ -233,4 +271,103 @@ body, html {
 @keyframes borderPulse {
     0%, 100% { box-shadow: 0 0 20px rgba(0, 195, 255, 0.3), inset 0 0 20px rgba(0, 195, 255, 0.2), 0 0 30px rgba(0, 195, 255, 0.1); }
     50% { box-shadow: 0 0 25px rgba(0, 195, 255, 0.4), inset 0 0 25px rgba(0, 195, 255, 0.3), 0 0 35px rgba(0, 195, 255, 0.2); }
+} 
+
+/* Replace gridMove with scanlineMove */
+@keyframes scanlineMove {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(4px);
+    }
+}
+
+@keyframes rotateGradient {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
+
+.holo-select-container {
+    position: relative;
+    margin-top: 15px;
+}
+
+.holo-select {
+    width: 100%;
+    padding: 8px 35px 8px 15px;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 16px;
+    color: rgba(64, 255, 248, 0.9);
+    background: rgba(0, 20, 40, 0.9);
+    border: 1px solid rgba(64, 255, 248, 0.3);
+    border-radius: 6px;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 
+        0 0 10px rgba(64, 255, 248, 0.1),
+        inset 0 0 10px rgba(64, 255, 248, 0.05);
+    transition: all 0.3s ease;
+    background-image: none;  /* Remove default arrow in some browsers */
+}
+
+.holo-select:hover, .holo-select:focus {
+    border-color: rgba(64, 255, 248, 0.5);
+    box-shadow: 
+        0 0 15px rgba(64, 255, 248, 0.2),
+        inset 0 0 15px rgba(64, 255, 248, 0.1);
+}
+
+.holo-select option {
+    background: rgba(0, 20, 40, 0.95);
+    color: rgba(64, 255, 248, 0.9);
+    padding: 10px;
+}
+
+.holo-select option:checked,
+.holo-select option:hover,
+.holo-select option:focus {
+    background: linear-gradient(
+        90deg,
+        rgba(64, 255, 248, 0.15) 0%,
+        rgba(64, 255, 248, 0.3) 50%,
+        rgba(64, 255, 248, 0.15) 100%
+    );
+    color: rgba(64, 255, 248, 1);
+    text-shadow: 0 0 8px rgba(64, 255, 248, 0.5);
+}
+
+/* For Webkit browsers (Chrome, Safari) */
+.holo-select::-webkit-listbox {
+    background: rgba(0, 20, 40, 0.95);
+    border: 1px solid rgba(64, 255, 248, 0.3);
+    border-radius: 6px;
+}
+
+.holo-select::-webkit-listbox option:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(64, 255, 248, 0.15) 0%,
+        rgba(64, 255, 248, 0.3) 50%,
+        rgba(64, 255, 248, 0.15) 100%
+    );
+}
+
+.holo-select-arrow {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(64, 255, 248, 0.7);
+    pointer-events: none;
+    font-size: 14px;
+}
+
+.holo-select:hover + .holo-select-arrow {
+    color: rgba(64, 255, 248, 0.9);
 } 
