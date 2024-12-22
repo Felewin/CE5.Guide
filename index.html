@@ -26,7 +26,7 @@
         left: 50%;
         top: 50%;
         width: 110vw;
-        height: 110vh;
+        height: 100vh;
         transform: translate(-50%, -50%);
     }
 
@@ -55,13 +55,15 @@
     }
 
     @keyframes scalePowerup {
-        0% { transform: scale(0); }
-        3.33% { transform: scale(0.267); }
+        0% { transform: scale(0.267); }
+        2% { transform: scale(0.267); }
+        5.33% { transform: scale(0.267); }
         26.67% { transform: scale(0.267); }
-        43.33% { transform: scale(2); }
-        56.67% { transform: scale(2); }
-        73.33% { transform: scale(0.267); }
-        96.67% { transform: scale(0.267); }
+        38% { transform: scale(2); }
+        50% { transform: scale(2); }
+        64% { transform: scale(0.267); }
+        94.67% { transform: scale(0.267); }
+        98% { transform: scale(0); }
         100% { transform: scale(0); }
     }
 </style>
