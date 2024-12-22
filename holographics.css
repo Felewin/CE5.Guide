@@ -33,8 +33,11 @@ body, html {
 .holoviewer-title {
     color: rgba(0, 195, 255, 0.9);
     text-align: center;
-    font-family: 'Arial', sans-serif;
-    font-size: 24px;
+    font-family: "Space Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 48px;
     margin-bottom: 15px;
     text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
 }
@@ -56,7 +59,10 @@ body, html {
 .info-panel {
     flex: 1;
     color: rgba(0, 195, 255, 0.9);
-    font-family: 'Arial', sans-serif;
+    font-family: "Space Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
     padding: 15px;
     border: 1px solid rgba(0, 195, 255, 0.2);
     border-radius: 10px;
