@@ -1,4 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Create cursor glow element
+    const cursorGlow = document.createElement('div');
+    cursorGlow.className = 'cursor-glow';
+    document.body.appendChild(cursorGlow);
+
+    // Track mouse movement
+    const holoviewer = document.querySelector('.holoviewer');
+    
+    holoviewer.addEventListener('mousemove', (e) => {
+        const rect = holoviewer.getBoundingClientRect();
+        if (e.clientX >= rect.left && 
+            e.clientX <= rect.right && 
+            e.clientY >= rect.top && 
+            e.clientY <= rect.bottom) {
+            cursorGlow.style.opacity = '1';
+            cursorGlow.style.left = `${e.clientX}px`;
+            cursorGlow.style.top = `${e.clientY}px`;
+        } else {
+            cursorGlow.style.opacity = '0';
+        }
+    });
+
+    holoviewer.addEventListener('mouseleave', () => {
+        cursorGlow.style.opacity = '0';
+    });
+
     const selectContainer = document.getElementById('anomalySelect');
     const selected = selectContainer.querySelector('.select-selected');
     const items = selectContainer.querySelector('.select-items');
@@ -7,11 +33,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeDropdown() {
         items.classList.add('select-hide');
         arrow.style.transform = 'translateY(-50%)';
+        items.style.pointerEvents = 'none';
     }
 
     function toggleDropdown() {
         if (items.classList.contains('select-hide')) {
             items.style.visibility = 'visible';
+            items.style.pointerEvents = 'auto';
             items.classList.remove('select-hide');
             arrow.style.transform = 'translateY(-50%) rotate(180deg)';
         } else {
@@ -40,6 +68,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle item selection
     const selectItems = selectContainer.querySelectorAll('.select-item');
+    const viewscreen = document.querySelector('.viewscreen');
+
+    function updateAnomaly(type) {
+        // Clear existing anomaly
+        const existingAnomaly = viewscreen.querySelector('.powerup-container');
+        if (existingAnomaly) {
+            existingAnomaly.remove();
+        }
+
+        // Create new anomaly container
+        const container = document.createElement('div');
+        container.className = 'powerup-container';
+        
+        // Create anomaly element
+        const anomaly = document.createElement('div');
+        
+        if (type === 'powerup') {
+            anomaly.className = 'powerup';
+        } else if (type === 'mover') {
+            anomaly.className = 'mover';
+        }
+        
+        container.appendChild(anomaly);
+        viewscreen.appendChild(container);
+    }
+
     selectItems.forEach(item => {
         item.addEventListener('click', function() {
             // First, update selected status
@@ -51,11 +105,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 selected.textContent = this.textContent;
                 closeDropdown();
                 
-                // Handle the selection change
+                // Update the anomaly display
                 const selectedValue = this.dataset.value;
-                console.log('Selected:', selectedValue);
-                // Add your logic for handling the selection
-            }, 200); // Match the timing with the CSS transition
+                updateAnomaly(selectedValue);
+            }, 200);
         });
     });
+
+    // Initialize with powerup
+    updateAnomaly('powerup');
 }); 

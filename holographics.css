@@ -40,6 +40,7 @@ body, html {
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
+    cursor: default; /* Change from 'none' back to 'default' */
 }
 
 /* Replace checkerboard with horizontal scanlines */
@@ -415,7 +416,8 @@ body, html {
     z-index: 99;
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s;
+    pointer-events: auto;
 }
 
 .select-item {
@@ -478,5 +480,26 @@ body, html {
     opacity: 0;
     transform: translateY(-10px);
     visibility: hidden;
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s, pointer-events 0s linear 0.3s;
+} 
+
+.cursor-glow {
+    position: fixed;
+    width: 100px;
+    height: 100px;
+    pointer-events: none;
+    z-index: 9999;
+    background: radial-gradient(
+        circle at center,
+        rgba(64, 255, 248, 0.075) 0%,
+        rgba(64, 255, 248, 0.05) 20%,
+        rgba(64, 255, 248, 0.025) 40%,
+        transparent 70%
+    );
+    transform: translate(-50%, -50%);
+    mix-blend-mode: screen;
+    transition: opacity 0.3s ease;
+    margin-left: 2px;
+    margin-top: 2px;
 } 
