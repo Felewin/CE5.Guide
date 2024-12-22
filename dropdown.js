@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear existing anomaly
         const existingAnomaly = viewscreen.querySelector('.anomaly-container');
         const existingDelay = existingAnomaly?.querySelector('.powerup, .mover')?.style.animationDelay;
+        const progressFill = document.querySelector('.progress-fill');
         if (existingAnomaly) {
             existingAnomaly.remove();
         }
@@ -96,9 +97,11 @@ document.addEventListener('DOMContentLoaded', function() {
             anomaly.className = 'mover';
         }
 
-        // If paused, maintain current delay, otherwise calculate new one
-        if (!isPlaying && existingDelay) {
-            anomaly.style.animationDelay = existingDelay;
+        // When paused, always maintain current progress
+        if (!isPlaying) {
+            const currentProgress = parseFloat(progressFill.style.width || '0') / 100;
+            const currentTime = currentProgress * ANIMATION_DURATION;
+            anomaly.style.animationDelay = `-${currentTime / 1000}s`;
         } else {
             const currentTime = Date.now();
             const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
