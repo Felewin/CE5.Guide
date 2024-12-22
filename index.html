@@ -6,7 +6,7 @@
         width: 100%;
         height: 100%;
         background: black;
-        overflow: hidden;
+        overflow-x: hidden;
     }
 
     .star {
@@ -21,12 +21,42 @@
         50% { opacity: 1; }
     }
 
+    .anomaly-row {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+    }
+
+    .anomaly-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .anomaly-title {
+        position: absolute;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        z-index: 1;
+    }
+
     .powerup-container {
         position: absolute;
         left: 50%;
         top: 50%;
-        width: 110vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         transform: translate(-50%, -50%);
     }
 
@@ -50,8 +80,8 @@
     }
 
     @keyframes movePowerup {
-        0% { left: 0%; top: 65%; }
-        100% { left: 100%; top: 35%; }
+        0% { left: -5%; top: 65%; }
+        100% { left: 105%; top: 35%; }
     }
 
     @keyframes scalePowerup {
@@ -69,34 +99,66 @@
 </style>
 </head>
 <body>
-<div class="powerup-container">
-    <div class="powerup"></div>
-</div>
+    <div class="anomaly-row">
+        <div class="anomaly-container">
+            <div class="powerup-container">
+                <div class="powerup"></div>
+            </div>
+        </div>
+        <div class="anomaly-title">Powerup</div>
+    </div>
 
-<script>
-    function createStars(count) {
-        const container = document.body;
-        for (let i = 0; i < count; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            
-            // Random position
-            star.style.left = `${Math.random() * 100}vw`;
-            star.style.top = `${Math.random() * 100}vh`;
-            
-            // Random size (1-3px)
-            const size = Math.random() * 2 + 1;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            
-            // Random twinkle duration (3-8s)
-            star.style.setProperty('--twinkle-duration', `${Math.random() * 5 + 3}s`);
-            
-            container.appendChild(star);
+    <div class="anomaly-row">
+        <div class="anomaly-container">
+            <div class="powerup-container">
+                <div class="powerup"></div>
+            </div>
+        </div>
+        <div class="anomaly-title">Powerup</div>
+    </div>
+
+    <div class="anomaly-row">
+        <div class="anomaly-container">
+            <div class="powerup-container">
+                <div class="powerup"></div>
+            </div>
+        </div>
+        <div class="anomaly-title">Powerup</div>
+    </div>
+
+    <div class="anomaly-row">
+        <div class="anomaly-container">
+            <div class="powerup-container">
+                <div class="powerup"></div>
+            </div>
+        </div>
+        <div class="anomaly-title">Powerup</div>
+    </div>
+
+    <script>
+        function createStars(count) {
+            const container = document.body;
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                
+                // Random size (1-3px)
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // Random twinkle duration (3-8s)
+                star.style.setProperty('--twinkle-duration', `${Math.random() * 5 + 3}s`);
+                
+                container.appendChild(star);
+            }
         }
-    }
 
-    // Create 200 stars
-    createStars(200);
-</script>
+        // Create 200 stars
+        createStars(200);
+    </script>
 </body></html>
