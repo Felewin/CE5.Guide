@@ -1,0 +1,45 @@
+.powerup-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 110%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+}
+
+.powerup {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, 
+        rgba(255,255,255,1) 0%, 
+        rgba(255,255,255,0.9) 20%,
+        rgba(255,255,255,0.7) 40%,
+        rgba(255,255,255,0.4) 60%,
+        rgba(255,255,255,0.2) 80%,
+        rgba(255,255,255,0) 100%
+    );
+    border-radius: 50%;
+    animation: movePowerup 30s linear infinite, scalePowerup 30s linear infinite;
+    transform-origin: center center;
+}
+
+@keyframes movePowerup {
+    0% { left: 0%; top: 65%; }
+    100% { left: 100%; top: 35%; }
+}
+
+@keyframes scalePowerup {
+    0% { transform: scale(0.267); }
+    2% { transform: scale(0.267); }
+    5.33% { transform: scale(0.267); }
+    26.67% { transform: scale(0.267); }
+    38% { transform: scale(2); }
+    50% { transform: scale(2); }
+    64% { transform: scale(0.267); }
+    94.67% { transform: scale(0.267); }
+    98% { transform: scale(0); }
+    100% { transform: scale(0); }
+} 

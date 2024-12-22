@@ -1,0 +1,11 @@
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--twinkle-duration) ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+} 
