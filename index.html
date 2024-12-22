@@ -4,7 +4,7 @@
         margin: 0;
         padding: 0;
         width: 100%;
-        height: 100%;
+        min-height: 400vh;
         background: black;
         overflow-x: hidden;
     }
@@ -46,7 +46,6 @@
         color: white;
         font-family: Arial, sans-serif;
         font-size: 2rem;
-        text-transform: uppercase;
         letter-spacing: 0.2em;
         z-index: 1;
     }
@@ -96,6 +95,52 @@
         98% { transform: scale(0); }
         100% { transform: scale(0); }
     }
+
+    /* Update scrollbar styles */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: linear-gradient(45deg,
+            rgba(0, 255, 255, 0.15) 0%,
+            rgba(0, 140, 255, 0.15) 50%,
+            rgba(0, 255, 255, 0.15) 100%
+        );
+        border-radius: 100vh;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+    }
+
+    @keyframes holographicShift {
+        0% { 
+            background: linear-gradient(45deg, 
+                rgba(0, 255, 255, 0.8) 0%,
+                rgba(0, 140, 255, 0.5) 50%,
+                rgba(0, 255, 255, 0.8) 100%
+            );
+        }
+        50% { 
+            background: linear-gradient(45deg, 
+                rgba(0, 140, 255, 0.8) 0%,
+                rgba(0, 255, 255, 0.5) 50%,
+                rgba(0, 140, 255, 0.8) 100%
+            );
+        }
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 100vh;
+        background: linear-gradient(45deg, 
+            rgba(0, 255, 255, 0.9) 0%,
+            rgba(0, 140, 255, 0.7) 50%,
+            rgba(0, 255, 255, 0.9) 100%
+        );
+    }
+
+    ::-moz-scrollbar-button, ::-webkit-scrollbar-button {
+        width: 0px;
+        display:none;
+    }
 </style>
 </head>
 <body>
@@ -138,13 +183,16 @@
     <script>
         function createStars(count) {
             const container = document.body;
+            const rows = document.querySelectorAll('.anomaly-row').length;
+            const totalHeight = rows * 100; // total height in vh units
+            
             for (let i = 0; i < count; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 
-                // Random position
+                // Random position across full document height
                 star.style.left = `${Math.random() * 100}vw`;
-                star.style.top = `${Math.random() * 100}vh`;
+                star.style.top = `${Math.random() * totalHeight}vh`;
                 
                 // Random size (1-3px)
                 const size = Math.random() * 2 + 1;
@@ -158,7 +206,7 @@
             }
         }
 
-        // Create 200 stars
-        createStars(200);
+        // Create 800 stars
+        createStars(800);
     </script>
 </body></html>
