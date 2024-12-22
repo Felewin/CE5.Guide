@@ -22,7 +22,10 @@
         rgba(255,255,255,0) 100%
     );
     border-radius: 50%;
-    animation: movePowerup 30s linear infinite, scalePowerup 30s linear infinite;
+    animation: 
+        movePowerup 30s linear infinite,
+        scalePowerup 30s linear infinite;
+    animation-play-state: running;
     transform-origin: center center;
 }
 

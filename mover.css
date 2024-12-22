@@ -14,6 +14,7 @@
     );
     border-radius: 50%;
     animation: movePowerup 30s linear infinite;
+    animation-play-state: running;
     transform: scale(0.267);
     transform-origin: center center;
 } 

@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Move isPlaying to top with other global variables
+    let animationStartTime = Date.now();
+    const ANIMATION_DURATION = 30000; // 30 seconds in milliseconds
+    let isPlaying = true;
+
     // Create cursor glow element
     const cursorGlow = document.createElement('div');
     cursorGlow.className = 'cursor-glow';
@@ -77,6 +82,10 @@ document.addEventListener('DOMContentLoaded', function() {
             existingAnomaly.remove();
         }
 
+        // Calculate current position in animation cycle
+        const currentTime = Date.now();
+        const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
+
         // Create new anomaly container
         const container = document.createElement('div');
         container.className = 'powerup-container';
@@ -89,6 +98,13 @@ document.addEventListener('DOMContentLoaded', function() {
         } else if (type === 'mover') {
             anomaly.className = 'mover';
         }
+
+        // Set animation delay to maintain position
+        const delay = -elapsedTime / 1000;
+        anomaly.style.animationDelay = `${delay}s`;
+        
+        // Set initial animation state
+        anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
         
         container.appendChild(anomaly);
         viewscreen.appendChild(container);
@@ -112,6 +128,64 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize with powerup
+    function updateProgressBar() {
+        const currentTime = Date.now();
+        const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
+        const progress = (elapsedTime / ANIMATION_DURATION) * 100;
+        
+        const progressFill = document.querySelector('.progress-fill');
+        const progressHandle = document.querySelector('.progress-handle');
+        
+        progressFill.style.width = `${progress}%`;
+        progressHandle.style.left = `${progress}%`;
+        
+        if (isPlaying) {
+            requestAnimationFrame(updateProgressBar);
+        }
+    }
+
+    // Add playback controls
+    const playPauseBtn = document.querySelector('.play-pause-btn');
+    const progressContainer = document.querySelector('.progress-container');
+    const progressFill = document.querySelector('.progress-fill');
+
+    playPauseBtn.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        playPauseBtn.querySelector('i').className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+        
+        const anomaly = document.querySelector('.powerup, .mover');
+        if (anomaly) {
+            anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
+        }
+        
+        if (isPlaying) {
+            animationStartTime = Date.now() - (parseFloat(progressFill.style.width || '0') / 100 * ANIMATION_DURATION);
+            updateProgressBar();
+        }
+    });
+
+    progressContainer.addEventListener('click', (e) => {
+        const rect = progressContainer.getBoundingClientRect();
+        const progress = (e.clientX - rect.left) / rect.width;
+        const newTime = progress * ANIMATION_DURATION;
+        
+        // Update animation start time to match the clicked position
+        animationStartTime = Date.now() - newTime;
+        
+        const anomaly = document.querySelector('.powerup, .mover');
+        if (anomaly) {
+            // Reset the animation and set the new delay
+            anomaly.style.animation = 'none';
+            anomaly.offsetHeight; // Force reflow
+            anomaly.style.animation = '';
+            anomaly.style.animationDelay = `-${newTime / 1000}s`;
+            
+            // Maintain play/pause state
+            anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
+        }
+    });
+
+    // Initialize with powerup and start progress bar
     updateAnomaly('powerup');
+    updateProgressBar();
 }); 
