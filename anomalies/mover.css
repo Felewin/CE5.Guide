@@ -13,8 +13,12 @@
         rgba(255,255,255,0) 100%
     );
     border-radius: 50%;
-    animation: movePowerup 30s linear infinite;
-    animation-play-state: running;
+    animation: moveMover 30s linear infinite;
     transform: scale(0.267);
     transform-origin: center center;
+}
+
+@keyframes moveMover {
+    0% { left: 0%; top: 65%; }
+    100% { left: 100%; top: 35%; }
 } 

@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateAnomaly(type) {
         // Clear existing anomaly
-        const existingAnomaly = viewscreen.querySelector('.powerup-container');
+        const existingAnomaly = viewscreen.querySelector('.anomaly-container');
         if (existingAnomaly) {
             existingAnomaly.remove();
         }
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Create new anomaly container
         const container = document.createElement('div');
-        container.className = 'powerup-container';
+        container.className = 'anomaly-container';
         
         // Create anomaly element
         const anomaly = document.createElement('div');
