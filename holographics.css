@@ -30,6 +30,14 @@ body, html {
     box-sizing: border-box;
 }
 
+.holoviewer-title-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
 .holoviewer-title {
     color: rgba(0, 195, 255, 0.9);
     text-align: center;
@@ -38,8 +46,50 @@ body, html {
     font-weight: 700;
     font-style: normal;
     font-size: 48px;
-    margin-bottom: 15px;
     text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+}
+
+#infobutton {
+    position: absolute;
+    right: 0;
+    color: rgba(0, 195, 255, 0.9);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#infobutton:hover {
+    color: rgba(0, 195, 255, 1);
+}
+
+#infobutton::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 300px;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(0, 20, 40, 0.95);
+    color: rgba(0, 195, 255, 0.9);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: left;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 195, 255, 0.4);
+    box-shadow: 
+        0 0 20px rgba(0, 195, 255, 0.2),
+        inset 0 0 20px rgba(0, 195, 255, 0.1);
+    z-index: 10;
+}
+
+#infobutton:hover::after {
+    opacity: 1;
+    transform: translateY(5px);
 }
 
 .holoviewer-content {
