@@ -78,13 +78,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateAnomaly(type) {
         // Clear existing anomaly
         const existingAnomaly = viewscreen.querySelector('.anomaly-container');
+        const existingDelay = existingAnomaly?.querySelector('.powerup, .mover')?.style.animationDelay;
         if (existingAnomaly) {
             existingAnomaly.remove();
         }
-
-        // Calculate current position in animation cycle
-        const currentTime = Date.now();
-        const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
 
         // Create new anomaly container
         const container = document.createElement('div');
@@ -99,9 +96,15 @@ document.addEventListener('DOMContentLoaded', function() {
             anomaly.className = 'mover';
         }
 
-        // Set animation delay to maintain position
-        const delay = -elapsedTime / 1000;
-        anomaly.style.animationDelay = `${delay}s`;
+        // If paused, maintain current delay, otherwise calculate new one
+        if (!isPlaying && existingDelay) {
+            anomaly.style.animationDelay = existingDelay;
+        } else {
+            const currentTime = Date.now();
+            const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
+            const delay = -elapsedTime / 1000;
+            anomaly.style.animationDelay = `${delay}s`;
+        }
         
         // Set initial animation state
         anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
@@ -183,6 +186,12 @@ document.addEventListener('DOMContentLoaded', function() {
             // Maintain play/pause state
             anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
         }
+
+        // Update progress bar visuals even when paused
+        const progressFill = document.querySelector('.progress-fill');
+        const progressHandle = document.querySelector('.progress-handle');
+        progressFill.style.width = `${progress * 100}%`;
+        progressHandle.style.left = `${progress * 100}%`;
     });
 
     // Initialize with powerup and start progress bar
