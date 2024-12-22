@@ -5,7 +5,6 @@
         margin: 0;
         padding: 0;
         width: 100%;
-        min-height: 400vh;
         background: black;
         overflow-x: hidden;
     }
@@ -153,32 +152,44 @@
     </div>
 
     <script>
+        // Function to update dynamic values based on row count
+        function updateDynamicValues() {
+            const rows = document.querySelectorAll('.anomaly-row').length;
+            
+            // Set body height based on row count
+            document.body.style.minHeight = `${rows * 100}vh`;
+            
+            // Create stars proportional to row count (200 stars per row)
+            createStars(rows * 200);
+        }
+
         function createStars(count) {
+            // Clear existing stars first
+            const existingStars = document.querySelectorAll('.star');
+            existingStars.forEach(star => star.remove());
+
             const container = document.body;
             const rows = document.querySelectorAll('.anomaly-row').length;
-            const totalHeight = rows * 100; // total height in vh units
+            const totalHeight = rows * 100;
             
             for (let i = 0; i < count; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 
-                // Random position across full document height
                 star.style.left = `${Math.random() * 100}vw`;
                 star.style.top = `${Math.random() * totalHeight}vh`;
                 
-                // Random size (1-3px)
                 const size = Math.random() * 2 + 1;
                 star.style.width = `${size}px`;
                 star.style.height = `${size}px`;
                 
-                // Random twinkle duration (3-8s)
                 star.style.setProperty('--twinkle-duration', `${Math.random() * 5 + 3}s`);
                 
                 container.appendChild(star);
             }
         }
 
-        // Create 800 stars
-        createStars(800);
+        // Call updateDynamicValues when the page loads
+        document.addEventListener('DOMContentLoaded', updateDynamicValues);
     </script>
 </body></html>
