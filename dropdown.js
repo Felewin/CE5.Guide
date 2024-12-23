@@ -55,8 +55,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update anomaly-specific info
             const infoElements = document.querySelectorAll('.anomaly-specific-info');
             infoElements.forEach(element => {
-                if (element.dataset.anomaly === this.dataset.value) {
+                const anomalyType = element.dataset.anomaly;
+                if (anomalyType === this.dataset.value) {
                     element.classList.remove('hidden');
+                    // Get the info object for this anomaly type
+                    const infoObject = window.anomalyInfos[anomalyType];
+                    if (infoObject) {
+                        element.innerHTML = infoObject.description + (infoObject.media || '');
+                    }
                 } else {
                     element.classList.add('hidden');
                 }
@@ -67,6 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize with powerup
-    updateAnomaly('powerup');
+    // Initialize with powerup info
+    const initialInfoElement = document.querySelector('.anomaly-specific-info[data-anomaly="powerup"]');
+    if (initialInfoElement) {
+        initialInfoElement.innerHTML = window.anomalyInfos.powerup.description + (window.anomalyInfos.powerup.media || '');
+    }
 }); 

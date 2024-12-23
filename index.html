@@ -4,9 +4,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="scrollbar.css">
 <link rel="stylesheet" href="holographics.css">
+<link rel="stylesheet" href="generic.css">
 <link rel="stylesheet" href="starfield/starfield.css">
 <link rel="stylesheet" href="anomalies/powerup.css">
 <link rel="stylesheet" href="anomalies/mover.css">
+<link rel="stylesheet" href="anomalies/wobbler.css">
 <link rel="stylesheet" href="anomalies/anomaly.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -46,28 +48,16 @@
                             <div class="select-items select-hide">
                                 <div class="select-item selected" data-value="powerup">Powerup</div>
                                 <div class="select-item" data-value="mover">Mover</div>
+                                <div class="select-item" data-value="wobbler">Wobbler</div>
                             </div>
                             <i class="fas fa-chevron-down holo-select-arrow"></i>
                         </div>
                     </div>
                 </div>
                 <div class="holo-panel info-scroll">
-                    <div class="anomaly-specific-info" data-anomaly="powerup">
-                        Check out some of the best real footage of powerups!
-                        <div class="video-container">
-                            <iframe 
-                                src="https://www.youtube.com/embed/cbYj_IrX_vA?list=PLCXiD1JyNd6XhegrLOYWwGvXj5B5KG0HD" 
-                                title="The CE-5 Protocol - Port Austin, Michigan USA" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                referrerpolicy="strict-origin-when-cross-origin" 
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-                    <div class="anomaly-specific-info hidden" data-anomaly="mover">
-                        Movers are known for their predictable paths but unpredictable effects.
-                    </div>
+                    <div class="anomaly-specific-info" data-anomaly="powerup"></div>
+                    <div class="anomaly-specific-info hidden" data-anomaly="mover"></div>
+                    <div class="anomaly-specific-info hidden" data-anomaly="wobbler"></div>
                 </div>
             </div>
         </div>
@@ -78,8 +68,10 @@
 <script src="starfield/starfield.js"></script>
 <script src="cursor-glow.js"></script>
 <script src="anomalies/anomaly.js"></script>
+<script src="anomalies/anomaly-specific-info.js"></script>
 <script src="anomalies/powerup.js"></script>
 <script src="anomalies/mover.js"></script>
+<script src="anomalies/wobbler.js"></script>
 <script src="playback-controls.js"></script>
 <script src="dropdown.js"></script>
 </body></html>
