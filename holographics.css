@@ -612,3 +612,37 @@ body, html {
         0 0 12px rgba(64, 255, 248, 0.6),
         0 0 18px rgba(64, 255, 248, 0.4);
 } 
+
+.anomaly-specific-info {
+    margin-top: 15px;
+    color: rgba(120, 220, 255, 0.8);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.anomaly-specific-info a {
+    color: rgba(120, 220, 255, 0.9);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.anomaly-specific-info a:hover {
+    color: rgba(120, 220, 255, 1);
+    text-shadow: 0 0 8px rgba(120, 220, 255, 0.4);
+} 
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    margin-top: 10px;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+} 
