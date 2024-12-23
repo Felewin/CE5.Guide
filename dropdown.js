@@ -44,6 +44,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     selectItems.forEach(item => {
         item.addEventListener('click', function() {
+            // If clicking the already selected item, do nothing
+            if (this.classList.contains('selected')) {
+                closeDropdown();
+                return;
+            }
+
             // First, update selected status
             selectItems.forEach(i => i.classList.remove('selected'));
             this.classList.add('selected');
@@ -58,13 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const anomalyType = element.dataset.anomaly;
                 if (anomalyType === this.dataset.value) {
                     element.classList.remove('hidden');
-                    // Get the info object for this anomaly type
-                    const infoObject = window.anomalyInfos[anomalyType];
-                    if (infoObject) {
-                        element.innerHTML = infoObject.description + (infoObject.media || '');
-                    }
                 } else {
                     element.classList.add('hidden');
+                    // Use global pauseYouTubeVideos function
+                    window.pauseYouTubeVideos(element);
                 }
             });
             
@@ -73,9 +76,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize with powerup info
-    const initialInfoElement = document.querySelector('.anomaly-specific-info[data-anomaly="powerup"]');
-    if (initialInfoElement) {
-        initialInfoElement.innerHTML = window.anomalyInfos.powerup.description + (window.anomalyInfos.powerup.media || '');
-    }
+    // Initialize content on page load
+    document.querySelectorAll('.anomaly-specific-info').forEach(element => {
+        const anomalyType = element.dataset.anomaly;
+        const infoObject = window.anomalyInfos[anomalyType];
+        if (infoObject) {
+            element.innerHTML = infoObject.content;
+        }
+    });
 }); 
