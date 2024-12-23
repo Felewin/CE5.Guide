@@ -2,8 +2,8 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 30px;
-    height: 30px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     animation: 
         movePowerup 30s linear infinite,
@@ -20,19 +20,28 @@
 }
 
 @keyframes scalePowerup {
-    0% { transform: scale(0.1); }
-    27% { transform: scale(0.1); }
-    38% { transform: scale(1); }
-    50% { transform: scale(1); }
-    64% { transform: scale(0.1); }
-    100% { transform: scale(0.1); }
+    0% { transform: scale(.5); }
+    27% { transform: scale(.5); }
+    38% { transform: scale(1.5); }
+    50% { transform: scale(1.5); }
+    64% { transform: scale(.5); }
+    100% { transform: scale(.5); }
 }
 
 @keyframes boxShadowPowerup {
     0% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1); }
     27% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1); }
-    38% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1), 0 0 4px 1px rgba(255, 255, 255, 1); }
-    50% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1), 0 0 4px 1px rgba(255, 255, 255, 1); }
+    38%, 50% { 
+        box-shadow: 
+            /* Distinct circle */
+            0 0 15px 8px rgba(255, 255, 255, 0.9),
+            0 0 16px 8px rgba(255, 255, 255, 0.8),
+            /* Sharp falloff */
+            0 0 17px 10px rgba(255, 255, 255, 0.5),
+            /* Far-reaching glow */
+            0 0 50px 25px rgba(255, 255, 255, 0.1),
+            0 0 80px 40px rgba(255, 255, 255, 0.05);
+    }
     64% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1); }
     100% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1); }
 } 
