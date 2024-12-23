@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
         isPlaying = !isPlaying;
         playPauseBtn.querySelector('i').className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
         
-        const anomaly = document.querySelector('.powerup, .mover');
+        const anomaly = document.querySelector('#current-anomaly');
         if (anomaly) {
             // Simply pause/play the animation
             anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         animationStartTime = Date.now() - newTime;
         
         // Update animation
-        const anomaly = document.querySelector('.powerup, .mover');
+        const anomaly = document.querySelector('#current-anomaly');
         if (anomaly) {
             // Force animation to start at the clicked percentage
             anomaly.style.animation = 'none';

@@ -26,6 +26,7 @@ function updateAnomaly(type) {
     // Create anomaly element
     const anomaly = document.createElement('div');
     anomaly.className = type;
+    anomaly.id = 'current-anomaly';
 
     if (!isPlaying) {
         // When paused, use progress bar position
