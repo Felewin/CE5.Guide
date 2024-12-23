@@ -9,8 +9,12 @@ function updateAnomaly(type) {
     // Get existing state before removing
     const existingAnomaly = viewscreen.querySelector('.anomaly-container');
     const existingElement = existingAnomaly?.querySelector('.powerup, .mover');
-    const currentDelay = existingElement?.style.animationDelay;
     
+    // Check if we're trying to set the same type that's already displayed
+    if (existingElement && existingElement.classList.contains(type)) {
+        return; // Exit early if same type
+    }
+
     if (existingAnomaly) {
         existingAnomaly.remove();
     }
@@ -23,12 +27,14 @@ function updateAnomaly(type) {
     const anomaly = document.createElement('div');
     anomaly.className = type;
 
-    // Set animation state
-    if (!isPlaying && currentDelay) {
-        // When paused, maintain exact delay
-        anomaly.style.animationDelay = currentDelay;
+    if (!isPlaying) {
+        // When paused, use progress bar position
+        const progressFill = document.querySelector('.progress-fill');
+        const currentProgress = parseFloat(progressFill.style.width || '0') / 100;
+        const currentTime = currentProgress * ANIMATION_DURATION;
+        anomaly.style.animationDelay = `-${currentTime / 1000}s`;
     } else {
-        // When playing or no previous delay, calculate new position
+        // When playing, calculate from current time
         const currentTime = Date.now();
         const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
         const delay = -elapsedTime / 1000;
