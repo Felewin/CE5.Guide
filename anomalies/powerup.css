@@ -2,38 +2,37 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, 
-        rgba(255,255,255,1) 0%, 
-        rgba(255,255,255,0.9) 20%,
-        rgba(255,255,255,0.7) 40%,
-        rgba(255,255,255,0.4) 60%,
-        rgba(255,255,255,0.2) 80%,
-        rgba(255,255,255,0) 100%
-    );
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     animation: 
         movePowerup 30s linear infinite,
-        scalePowerup 30s linear infinite;
+        scalePowerup 30s linear infinite,
+        boxShadowPowerup 30s linear infinite;
     animation-play-state: running;
     transform-origin: center center;
+    background: #fff;
 }
 
 @keyframes movePowerup {
-    0% { left: 0%; top: 65%; }
-    100% { left: 100%; top: 35%; }
+    from { left: 0%; top: 65%; }
+    to { left: 100%; top: 35%; }
 }
 
 @keyframes scalePowerup {
-    0% { transform: scale(0.267); }
-    2% { transform: scale(0.267); }
-    5.33% { transform: scale(0.267); }
-    26.67% { transform: scale(0.267); }
-    38% { transform: scale(2); }
-    50% { transform: scale(2); }
-    64% { transform: scale(0.267); }
-    94.67% { transform: scale(0.267); }
-    98% { transform: scale(0); }
-    100% { transform: scale(0); }
+    0% { transform: scale(0.1); }
+    27% { transform: scale(0.1); }
+    38% { transform: scale(1); }
+    50% { transform: scale(1); }
+    64% { transform: scale(0.1); }
+    100% { transform: scale(0.1); }
+}
+
+@keyframes boxShadowPowerup {
+    0% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1); }
+    27% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1); }
+    38% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1), 0 0 4px 1px rgba(255, 255, 255, 1); }
+    50% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1), 0 0 4px 1px rgba(255, 255, 255, 1); }
+    64% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1); }
+    100% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1); }
 } 
