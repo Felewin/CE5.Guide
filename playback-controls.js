@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const playPauseBtn = document.querySelector('.play-pause-btn');
     const progressContainer = document.querySelector('.progress-container');
 
-    playPauseBtn.addEventListener('click', () => {
+    function togglePlayback() {
         isPlaying = !isPlaying;
         playPauseBtn.querySelector('i').className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
         
@@ -19,6 +19,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentTime = currentProgress * ANIMATION_DURATION;
             animationStartTime = Date.now() - currentTime;
             updateProgressBar();
+        }
+    }
+
+    // Handle button click
+    playPauseBtn.addEventListener('click', togglePlayback);
+
+    // Handle space bar
+    window.addEventListener('keydown', function(e) {
+        if (e.code === 'Space' && e.target === document.body) {
+            e.preventDefault(); // Prevent page scroll
+            togglePlayback();
         }
     });
 
