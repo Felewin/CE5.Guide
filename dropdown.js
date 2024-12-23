@@ -1,3 +1,6 @@
+// Make handleAnomalySelection available globally
+window.handleAnomalySelection = null; // Declare first to avoid reference errors
+
 document.addEventListener('DOMContentLoaded', function() {
     const selectContainer = document.getElementById('anomalySelect');
     const selected = selectContainer.querySelector('.select-selected');
@@ -42,37 +45,42 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle item selection
     const selectItems = selectContainer.querySelectorAll('.select-item');
 
+    // Define the function and assign it to the global scope
+    window.handleAnomalySelection = function(selectedItem) {
+        // If clicking the already selected item, do nothing
+        if (selectedItem.classList.contains('selected')) {
+            closeDropdown();
+            return;
+        }
+
+        // Update selected status
+        selectContainer.querySelectorAll('.select-item').forEach(i => i.classList.remove('selected'));
+        selectedItem.classList.add('selected');
+        
+        // Update text and close dropdown
+        selected.textContent = selectedItem.textContent;
+        closeDropdown();
+        
+        // Update anomaly-specific info
+        const infoElements = document.querySelectorAll('.anomaly-specific-info');
+        infoElements.forEach(element => {
+            const anomalyType = element.dataset.anomaly;
+            if (anomalyType === selectedItem.dataset.value) {
+                element.classList.remove('hidden');
+            } else {
+                element.classList.add('hidden');
+                window.pauseYouTubeVideos(element);
+            }
+        });
+        
+        // Update anomaly
+        updateAnomaly(selectedItem.dataset.value);
+    };
+
+    // Use the function in click handler
     selectItems.forEach(item => {
         item.addEventListener('click', function() {
-            // If clicking the already selected item, do nothing
-            if (this.classList.contains('selected')) {
-                closeDropdown();
-                return;
-            }
-
-            // First, update selected status
-            selectItems.forEach(i => i.classList.remove('selected'));
-            this.classList.add('selected');
-            
-            // Update text and close dropdown immediately
-            selected.textContent = this.textContent;
-            closeDropdown();
-            
-            // Update anomaly-specific info
-            const infoElements = document.querySelectorAll('.anomaly-specific-info');
-            infoElements.forEach(element => {
-                const anomalyType = element.dataset.anomaly;
-                if (anomalyType === this.dataset.value) {
-                    element.classList.remove('hidden');
-                } else {
-                    element.classList.add('hidden');
-                    // Use global pauseYouTubeVideos function
-                    window.pauseYouTubeVideos(element);
-                }
-            });
-            
-            // use updateAnomaly
-            updateAnomaly(this.dataset.value);
+            window.handleAnomalySelection(this);
         });
     });
 
