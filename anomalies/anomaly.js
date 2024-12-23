@@ -63,3 +63,17 @@ function updateProgressBar() {
         requestAnimationFrame(updateProgressBar);
     }
 }
+
+// Initialize the first powerup with proper timing
+window.onload = function() {
+    // Add a small delay to ensure everything is ready
+    setTimeout(() => {
+        // Find and click the mover option to force proper initialization
+        const moverOption = document.querySelector('.select-item[data-value="mover"]');
+        moverOption.click();
+        
+        // Then switch back to powerup
+        const powerupOption = document.querySelector('.select-item[data-value="powerup"]');
+        powerupOption.click();
+    }, 100);
+};
