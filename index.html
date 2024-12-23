@@ -38,17 +38,21 @@
                 </div>
             </div>
             <div class="sidepanel-to-viewscreen">
-                Choose an anomaly to preview:
-                <div class="holo-select-container">
-                    <div class="custom-select" id="anomalySelect">
-                        <div class="select-selected">Powerup</div>
-                        <div class="select-items select-hide">
-                            <div class="select-item selected" data-value="powerup">Powerup</div>
-                            <div class="select-item" data-value="mover">Mover</div>
+                <div class="holo-panel">
+                    Choose an anomaly to preview:
+                    <div class="holo-select-container">
+                        <div class="custom-select" id="anomalySelect">
+                            <div class="select-selected">Powerup</div>
+                            <div class="select-items select-hide">
+                                <div class="select-item selected" data-value="powerup">Powerup</div>
+                                <div class="select-item" data-value="mover">Mover</div>
+                            </div>
+                            <i class="fas fa-chevron-down holo-select-arrow"></i>
                         </div>
-                        <i class="fas fa-chevron-down holo-select-arrow"></i>
                     </div>
-                    <div class="anomaly-specific-info">
+                </div>
+                <div class="holo-panel info-scroll">
+                    <div class="anomaly-specific-info" data-anomaly="powerup">
                         Check out some of the best real footage of powerups!
                         <div class="video-container">
                             <iframe 
@@ -61,6 +65,9 @@
                             </iframe>
                         </div>
                     </div>
+                    <div class="anomaly-specific-info hidden" data-anomaly="mover">
+                        Movers are known for their predictable paths but unpredictable effects.
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,6 +78,8 @@
 <script src="starfield/starfield.js"></script>
 <script src="cursor-glow.js"></script>
 <script src="anomalies/anomaly.js"></script>
+<script src="anomalies/powerup.js"></script>
+<script src="anomalies/mover.js"></script>
 <script src="playback-controls.js"></script>
 <script src="dropdown.js"></script>
 </body></html>
