@@ -1,27 +1,20 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Create cursor glow element
-    const cursorGlow = document.createElement('div');
-    cursorGlow.className = 'cursor-glow';
-    document.body.appendChild(cursorGlow);
-
-    // Track mouse movement
-    const holoviewer = document.querySelector('.holoviewer');
+document.addEventListener('DOMContentLoaded', () => {
+    // Create cursor glow element if it doesn't exist
+    let cursorGlow = document.querySelector('.cursor-glow');
+    if (!cursorGlow) {
+        cursorGlow = document.createElement('div');
+        cursorGlow.className = 'cursor-glow';
+        document.body.appendChild(cursorGlow);
+    }
     
-    holoviewer.addEventListener('mousemove', (e) => {
-        const rect = holoviewer.getBoundingClientRect();
-        if (e.clientX >= rect.left && 
-            e.clientX <= rect.right && 
-            e.clientY >= rect.top && 
-            e.clientY <= rect.bottom) {
-            cursorGlow.style.opacity = '1';
-            cursorGlow.style.left = `${e.clientX}px`;
-            cursorGlow.style.top = `${e.clientY}px`;
-        } else {
-            cursorGlow.style.opacity = '0';
-        }
-    });
+    let hasMovedOnce = false;
 
-    holoviewer.addEventListener('mouseleave', () => {
-        cursorGlow.style.opacity = '0';
+    document.addEventListener('mousemove', (e) => {
+        if (!hasMovedOnce) {
+            cursorGlow.classList.add('active');
+            hasMovedOnce = true;
+        }
+        cursorGlow.style.left = e.clientX + 'px';
+        cursorGlow.style.top = e.clientY + 'px';
     });
 }); 
