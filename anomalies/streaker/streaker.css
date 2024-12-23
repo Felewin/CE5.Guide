@@ -9,10 +9,9 @@
     opacity: 0;
     background: #fff;
     animation: 
-        moveStreaker 30s linear infinite,
-        fadeStreaker 30s linear infinite,
-        glowStreaker 30s linear infinite;
-    animation-play-state: inherit;
+        moveStreaker 5s linear infinite,
+        fadeStreaker 5s ease-in-out infinite,
+        glowStreaker 5s ease-in-out infinite !important;
 }
 
 .streaker::after {
@@ -25,47 +24,43 @@
     transform: translateY(-50%);
     opacity: 0;
     animation: 
-        trailLength 30s linear infinite,
-        trailFade 30s linear infinite;
-    animation-delay: inherit;
-    animation-play-state: inherit;
+        trailLength 5s linear infinite,
+        trailFade 5s ease-in-out infinite !important;
 }
 
 @keyframes moveStreaker {
-    0%, 8% { left: 20%; }
-    18%, 100% { left: 80%; }
+    0% { left: 20%; }
+    100% { left: 80%; }
 }
 
 @keyframes fadeStreaker {
-    0%, 9% { opacity: 0; }
-    10%, 16% { opacity: 1; }
-    17%, 100% { opacity: 0; }
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 @keyframes glowStreaker {
-    0%, 9% { 
-        box-shadow: none;
-    }
-    13% { 
+    0% { box-shadow: none; }
+    40% { 
         box-shadow: 
             0 0 15px 8px rgba(255, 255, 255, 0.8),
             0 0 30px 15px rgba(255, 255, 255, 0.4),
             0 0 50px 25px rgba(255, 255, 255, 0.2);
     }
-    17%, 100% { 
-        box-shadow: none;
-    }
+    100% { box-shadow: none; }
 }
 
 @keyframes trailLength {
-    0%, 9% { width: 0; }
-    10%, 16% { width: 100px; }
-    17%, 100% { width: 100px; }
+    0% { width: 0; }
+    10% { width: 100px; }
+    90% { width: 100px; }
+    100% { width: 0; }
 }
 
 @keyframes trailFade {
-    0%, 9% { opacity: 0; }
-    10%, 16% { opacity: 1; }
-    17%, 20% { opacity: 1; }
-    21%, 100% { opacity: 0; }
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
 } 

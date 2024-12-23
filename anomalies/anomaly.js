@@ -5,9 +5,22 @@ let isPlaying = true;
 
 function updateAnomaly(type) {
     const currentAnomaly = document.querySelector('#current-anomaly');
-    currentAnomaly.className = type;
+    const wasPlaying = isPlaying;
     const currentTime = Date.now();
     const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
+
+    if (type === 'streaker') {
+        window.streaker.hideControls(wasPlaying, elapsedTime);
+    } else if (currentAnomaly.classList.contains('streaker')) {
+        // Coming back from streaker
+        const lastState = window.streaker.showControls();
+        if (lastState) {
+            isPlaying = lastState.wasPlaying;
+            animationStartTime = Date.now() - lastState.currentTime;
+        }
+    }
+
+    currentAnomaly.className = type;
     const delay = -elapsedTime / 1000;
     currentAnomaly.style.animationDelay = `${delay}s`;
     currentAnomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
