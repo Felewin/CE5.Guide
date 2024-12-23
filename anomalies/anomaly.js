@@ -3,16 +3,23 @@ let animationStartTime = Date.now();
 const ANIMATION_DURATION = 30000; // 30 seconds in milliseconds
 let isPlaying = true;
 
+// Set of uncontrollable anomaly types
+const uncontrollableTypes = new Set();
+
+// Registration function for uncontrollable types
+function registerUncontrollableType(type) {
+    uncontrollableTypes.add(type);
+}
+
 function updateAnomaly(type) {
     const currentAnomaly = document.querySelector('#current-anomaly');
     const wasPlaying = isPlaying;
     const currentTime = Date.now();
     const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
 
-    if (type === 'streaker') {
+    if (uncontrollableTypes.has(type)) {
         window.streaker.hideControls(wasPlaying, elapsedTime);
-    } else if (currentAnomaly.classList.contains('streaker')) {
-        // Coming back from streaker
+    } else if (currentAnomaly && uncontrollableTypes.has(currentAnomaly.className)) {
         const lastState = window.streaker.showControls();
         if (lastState) {
             isPlaying = lastState.wasPlaying;
