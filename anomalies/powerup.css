@@ -34,6 +34,7 @@
     27% { box-shadow: 0 0 100px 1px rgba(255, 255, 255, 1); }
     36% { 
         box-shadow: 
+            /* larger circle */
             0 0 20px 18px rgba(255, 255, 255, .1),
             0 0 20px 18px rgba(255, 255, 255, 0.05),
             /* Bright circle with hard edge */
@@ -47,6 +48,7 @@
     }
     46%, 67% { 
         box-shadow: 
+            /* larger circle */
             0 0 20px 18px rgba(255, 255, 255, .2),
             0 0 20px 18px rgba(255, 255, 255, 0.1),
             /* Bright circle with hard edge */
