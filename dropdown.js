@@ -76,10 +76,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const viewscreen = document.querySelector('.viewscreen');
 
     function updateAnomaly(type) {
-        // Clear existing anomaly
+        // Get existing state before removing
         const existingAnomaly = viewscreen.querySelector('.anomaly-container');
-        const existingDelay = existingAnomaly?.querySelector('.powerup, .mover')?.style.animationDelay;
-        const progressFill = document.querySelector('.progress-fill');
+        const existingElement = existingAnomaly?.querySelector('.powerup, .mover');
+        const currentDelay = existingElement?.style.animationDelay;
+        
         if (existingAnomaly) {
             existingAnomaly.remove();
         }
@@ -90,26 +91,20 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Create anomaly element
         const anomaly = document.createElement('div');
-        
-        if (type === 'powerup') {
-            anomaly.className = 'powerup';
-        } else if (type === 'mover') {
-            anomaly.className = 'mover';
-        }
+        anomaly.className = type;
 
-        // When paused, always maintain current progress
-        if (!isPlaying) {
-            const currentProgress = parseFloat(progressFill.style.width || '0') / 100;
-            const currentTime = currentProgress * ANIMATION_DURATION;
-            anomaly.style.animationDelay = `-${currentTime / 1000}s`;
+        // Set animation state
+        if (!isPlaying && currentDelay) {
+            // When paused, maintain exact delay
+            anomaly.style.animationDelay = currentDelay;
         } else {
+            // When playing or no previous delay, calculate new position
             const currentTime = Date.now();
             const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
             const delay = -elapsedTime / 1000;
             anomaly.style.animationDelay = `${delay}s`;
         }
         
-        // Set initial animation state
         anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
         
         container.appendChild(anomaly);
@@ -122,15 +117,12 @@ document.addEventListener('DOMContentLoaded', function() {
             selectItems.forEach(i => i.classList.remove('selected'));
             this.classList.add('selected');
             
-            // Wait for the indicator to slide
-            setTimeout(() => {
-                selected.textContent = this.textContent;
-                closeDropdown();
-                
-                // Update the anomaly display
-                const selectedValue = this.dataset.value;
-                updateAnomaly(selectedValue);
-            }, 200);
+            // Update text and close dropdown immediately
+            selected.textContent = this.textContent;
+            closeDropdown();
+            
+            // Always use updateAnomaly
+            updateAnomaly(this.dataset.value);
         });
     });
 
@@ -161,11 +153,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const anomaly = document.querySelector('.powerup, .mover');
         if (anomaly) {
+            // Simply pause/play the animation
             anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
         }
         
         if (isPlaying) {
-            animationStartTime = Date.now() - (parseFloat(progressFill.style.width || '0') / 100 * ANIMATION_DURATION);
+            // When resuming, maintain current progress
+            const progressFill = document.querySelector('.progress-fill');
+            const currentProgress = parseFloat(progressFill.style.width || '0') / 100;
+            const currentTime = currentProgress * ANIMATION_DURATION;
+            animationStartTime = Date.now() - currentTime;
             updateProgressBar();
         }
     });
@@ -175,26 +172,33 @@ document.addEventListener('DOMContentLoaded', function() {
         const progress = (e.clientX - rect.left) / rect.width;
         const newTime = progress * ANIMATION_DURATION;
         
-        // Update animation start time to match the clicked position
+        console.log({
+            progress: progress.toFixed(2),
+            newTime: newTime.toFixed(2),
+            'seconds into animation': (newTime / 1000).toFixed(2)
+        });
+        
+        // Update animation start time
         animationStartTime = Date.now() - newTime;
         
+        // Update animation
         const anomaly = document.querySelector('.powerup, .mover');
         if (anomaly) {
-            // Reset the animation and set the new delay
+            // Force animation to start at the clicked percentage
             anomaly.style.animation = 'none';
             anomaly.offsetHeight; // Force reflow
             anomaly.style.animation = '';
-            anomaly.style.animationDelay = `-${newTime / 1000}s`;
-            
-            // Maintain play/pause state
+            anomaly.style.animationDelay = '0s';
             anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
+            anomaly.style.animationTimingFunction = 'linear';
+            anomaly.style.animationDuration = '30s';
+            requestAnimationFrame(() => {
+                anomaly.style.animationDelay = `-${newTime / 1000}s`;
+            });
         }
-
-        // Update progress bar visuals even when paused
-        const progressFill = document.querySelector('.progress-fill');
-        const progressHandle = document.querySelector('.progress-handle');
-        progressFill.style.width = `${progress * 100}%`;
-        progressHandle.style.left = `${progress * 100}%`;
+        
+        // Update progress bar to match
+        updateProgressBar();
     });
 
     // Initialize with powerup and start progress bar
