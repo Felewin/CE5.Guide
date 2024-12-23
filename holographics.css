@@ -416,8 +416,13 @@ body, html {
     z-index: 99;
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     pointer-events: auto;
+}
+
+.select-hide {
+    display: none;
+    pointer-events: none;
 }
 
 .select-item {
@@ -475,14 +480,6 @@ body, html {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
 }
-
-.select-hide {
-    opacity: 0;
-    transform: translateY(-10px);
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s, pointer-events 0s linear 0.3s;
-} 
 
 .cursor-glow {
     position: fixed;
