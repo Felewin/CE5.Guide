@@ -6,6 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
         isPlaying = !isPlaying;
         playPauseBtn.querySelector('i').className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
         
+        // Add ripple effect
+        playPauseBtn.classList.remove('ripple');  // Reset animation
+        void playPauseBtn.offsetWidth;  // Force reflow
+        playPauseBtn.classList.add('ripple');
+        
         const anomaly = document.querySelector('#current-anomaly');
         if (anomaly) {
             // Simply pause/play the animation
