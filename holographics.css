@@ -581,6 +581,13 @@ body, html {
         inset 0 0 10px rgba(64, 255, 248, 0.05);
     position: relative;
     z-index: 3;
+    outline: none;  /* Remove focus outline */
+}
+
+/* For browsers that don't respect outline: none */
+.play-pause-btn:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .play-pause-btn:hover {
