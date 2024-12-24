@@ -8,7 +8,11 @@ function createClouds(count) {
         
         // Random size (50-150px)
         const width = Math.random() * 100 + 50;
-        const height = width * (Math.random() * 0.4 + 0.3); // 30-70% of width
+        const height = width * (Math.random() * 0.4 + 0.3);
+        
+        // Random opacity for variety
+        const opacity = 0.3 + Math.random() * 0.3;
+        cloud.style.setProperty('--cloud-opacity', opacity);
         
         cloud.style.width = `${width}px`;
         cloud.style.height = `${height}px`;
@@ -19,7 +23,7 @@ function createClouds(count) {
         
         // Random drift speed (30-60s)
         const driftDuration = Math.random() * 30 + 30;
-        cloud.style.transition = `left ${driftDuration}s linear, opacity 2s ease`;
+        cloud.style.transition = `left ${driftDuration}s linear`;
         
         container.appendChild(cloud);
         clouds.push(cloud);
@@ -35,41 +39,41 @@ function createClouds(count) {
             cloud.style.left = '110%';
             
             setTimeout(() => {
-                cloud.style.transition = `left ${driftDuration}s linear, opacity 2s ease`;
+                cloud.style.transition = `left ${driftDuration}s linear`;
                 cloud.style.left = '-10%';
             }, 100);
         }, driftDuration * 1000);
     }
     
-    // Check for illumination every frame
     function updateCloudIllumination() {
         const anomaly = document.querySelector('#current-anomaly');
-        const anomalyRect = anomaly.getBoundingClientRect();
-        const anomalyCenter = {
-            x: anomalyRect.left + anomalyRect.width / 2,
-            y: anomalyRect.top + anomalyRect.height / 2
-        };
+        const viewscreen = document.querySelector('.viewscreen');
+        const viewscreenRect = viewscreen.getBoundingClientRect();
         
-        const maxDistance = 200; // Maximum distance for illumination effect
+        // Get powerup's position relative to viewscreen
+        const anomalyRect = anomaly.getBoundingClientRect();
+        const relativeX = anomalyRect.left - viewscreenRect.left + anomalyRect.width / 2;
+        const relativeY = anomalyRect.top - viewscreenRect.top + anomalyRect.height / 2;
+        
+        const maxDistance = viewscreenRect.width * 0.2; // 20% of viewscreen width
         
         clouds.forEach(cloud => {
             const cloudRect = cloud.getBoundingClientRect();
-            const cloudCenter = {
-                x: cloudRect.left + cloudRect.width / 2,
-                y: cloudRect.top + cloudRect.height / 2
-            };
+            const cloudX = cloudRect.left - viewscreenRect.left + cloudRect.width / 2;
+            const cloudY = cloudRect.top - viewscreenRect.top + cloudRect.height / 2;
             
-            // Calculate distance
             const distance = Math.hypot(
-                cloudCenter.x - anomalyCenter.x,
-                cloudCenter.y - anomalyCenter.y
+                cloudX - relativeX,
+                cloudY - relativeY
             );
             
-            // Calculate illumination strength (0 to 1)
             const opacity = parseFloat(getComputedStyle(anomaly).opacity);
-            const illumination = Math.max(0, 1 - (distance / maxDistance)) * opacity;
+            const boxShadow = getComputedStyle(anomaly).boxShadow;
+            const isGlowing = boxShadow !== 'none' && boxShadow.includes('255');
             
-            // Apply smooth illumination
+            // Stronger illumination effect
+            const illumination = Math.pow(Math.max(0, 1 - (distance / maxDistance)), 2) * opacity * (isGlowing ? 1 : 0);
+            
             cloud.style.setProperty('--illumination', illumination);
         });
         
