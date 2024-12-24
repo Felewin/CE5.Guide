@@ -4,21 +4,3 @@ registerAnomalySpecificInfo('streaker', {
 
 // Register streaker as uncontrollable
 registerUncontrollableType('streaker');
-
-// Store playback state when switching to/from streaker
-window.streaker = {
-    hideControls: (wasPlaying, currentTime) => {
-        const controls = document.querySelector('.playback-controls');
-        controls.style.display = 'none';
-        // Store state for when we switch back
-        window.streaker.lastState = {
-            wasPlaying,
-            currentTime
-        };
-    },
-    showControls: () => {
-        const controls = document.querySelector('.playback-controls');
-        controls.style.display = '';
-        return window.streaker.lastState;
-    }
-};

@@ -18,12 +18,20 @@ function updateAnomaly(type) {
     const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
 
     if (uncontrollableTypes.has(type)) {
-        window.streaker.hideControls(wasPlaying, elapsedTime);
+        window.playbackControls.hideControls(wasPlaying, elapsedTime);
     } else if (currentAnomaly && uncontrollableTypes.has(currentAnomaly.className)) {
-        const lastState = window.streaker.showControls();
+        const lastState = window.playbackControls.showControls();
         if (lastState) {
-            isPlaying = lastState.wasPlaying;
+            // Always resume playing when returning to controllable type
+            isPlaying = true;
             animationStartTime = Date.now() - lastState.currentTime;
+            // Update play/pause button to show pause icon
+            const playPauseBtn = document.querySelector('.play-pause-btn i');
+            if (playPauseBtn) {
+                playPauseBtn.className = 'fas fa-pause';
+            }
+            // Restart progress bar animation
+            updateProgressBar();
         }
     }
 

@@ -69,4 +69,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Start progress bar
     updateProgressBar();
-}); 
+});
+
+// Playback state management for uncontrollable anomalies
+window.playbackControls = {
+    hideControls: (wasPlaying, currentTime) => {
+        const controls = document.querySelector('.playback-controls');
+        controls.style.display = 'none';
+        // Store state for when we switch back
+        window.playbackControls.lastState = {
+            wasPlaying,
+            currentTime
+        };
+    },
+    showControls: () => {
+        const controls = document.querySelector('.playback-controls');
+        controls.style.display = '';
+        return window.playbackControls.lastState;
+    }
+}; 
