@@ -1,0 +1,96 @@
+:root {
+    --flasher-duration: 30s;
+}
+
+.flasher {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    transform: scale(0.267);
+    transform-origin: center center;
+    opacity: 0;
+    background: radial-gradient(circle, 
+        rgba(255,255,255,1) 0%, 
+        rgba(255,255,255,0.9) 20%,
+        rgba(255,255,255,0.7) 40%,
+        rgba(255,255,255,0.4) 60%,
+        rgba(255,255,255,0.2) 80%,
+        rgba(255,255,255,0) 100%
+    );
+    animation: 
+        moveFlasher var(--flasher-duration) linear infinite,
+        flash var(--flasher-duration) linear infinite,
+        glow var(--flasher-duration) linear infinite;
+}
+
+@keyframes moveFlasher {
+    0% { left: 0%; top: 65%; }
+    100% { left: 100%; top: 35%; }
+}
+
+@keyframes flash {
+    /* Each flash is 0.25s = 0.833% of 30s */
+    /* Each gap is 4s = 13.333% of 30s */
+    
+    /* Start invisible */
+    0%, 100% { opacity: 0; }
+    
+    /* Flash 1: 0s-0.25s */
+    0% { opacity: 0; }
+    0.417% { opacity: 1; }  /* Peak at 0.125s */
+    0.833% { opacity: 0; }
+    
+    /* Flash 2: 4.25s-4.5s */
+    14.167% { opacity: 0; }
+    14.584% { opacity: 1; }  /* Peak at 4.375s */
+    15% { opacity: 0; }
+    
+    /* Flash 3: 8.5s-8.75s */
+    28.333% { opacity: 0; }
+    28.75% { opacity: 1; }   /* Peak at 8.625s */
+    29.167% { opacity: 0; }
+    
+    /* Flash 4: 12.75s-13s */
+    42.5% { opacity: 0; }
+    42.917% { opacity: 1; }  /* Peak at 12.875s */
+    43.333% { opacity: 0; }
+    
+    /* Flash 5: 17s-17.25s */
+    56.667% { opacity: 0; }
+    57.084% { opacity: 1; }  /* Peak at 17.125s */
+    57.5% { opacity: 0; }
+    
+    /* Flash 6: 21.25s-21.5s */
+    70.833% { opacity: 0; }
+    71.25% { opacity: 1; }   /* Peak at 21.375s */
+    71.667% { opacity: 0; }
+    
+    /* Flash 7: 25.5s-25.75s */
+    85% { opacity: 0; }
+    85.417% { opacity: 1; }  /* Peak at 25.625s */
+    85.833% { opacity: 0; }
+    
+    /* Flash 8: 29.75s-30s */
+    99.167% { opacity: 0; }
+    99.584% { opacity: 1; }  /* Peak at 29.875s */
+    100% { opacity: 0; }
+}
+
+@keyframes glow {
+    0%, 14.167%, 28.333%, 42.5%, 56.667%, 70.833%, 85%, 99.167%, 100% { 
+        box-shadow: none;
+    }
+    
+    0.417%, 14.584%, 28.75%, 42.917%, 57.084%, 71.25%, 85.417%, 99.584% { 
+        box-shadow: 
+            0 0 10px 5px rgba(255,255,255,0.6),
+            0 0 20px 10px rgba(255,255,255,0.3);
+    }
+    
+    0.833%, 15%, 29.167%, 43.333%, 57.5%, 71.667%, 85.833%, 100% { 
+        box-shadow: none;
+    }
+} 
