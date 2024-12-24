@@ -470,6 +470,10 @@ body, html {
     padding: 10px 15px;
     color: rgba(64, 255, 248, 0.9);
     transition: all 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 /* Separate hover and selected states */
