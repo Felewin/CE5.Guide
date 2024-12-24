@@ -1,3 +1,7 @@
+:root {
+    --flashbulb-duration: 4.33s;
+}
+
 .flashbulb {
     position: absolute;
     left: 50%;
@@ -9,8 +13,8 @@
     opacity: 0;
     background: #fff;
     animation: 
-        fadeFlashbulb 4.33s ease-in-out infinite,
-        glowFlashbulb 4.33s ease-in-out infinite !important;
+        fadeFlashbulb var(--flashbulb-duration) ease-in-out infinite,
+        glowFlashbulb var(--flashbulb-duration) ease-in-out infinite !important;
 }
 
 @keyframes fadeFlashbulb {
