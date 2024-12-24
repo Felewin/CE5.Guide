@@ -17,3 +17,20 @@ registerAnomalySpecificInfo('powerup', {
         'https://youtu.be/M0sY6FdlNeQ?t=188'
     )}`
 }); 
+
+// Define powerup glow animation timing constants for use by clouds.js
+window.POWERUP_CONSTANTS = {
+    GLOW_START: 0.34,  // 34%
+    GLOW_PEAK: 0.505,  // 50.5%
+    GLOW_END: 0.59,    // 59%
+    getGlowIntensity: function(progress) {
+        if (progress < this.GLOW_START || progress > this.GLOW_END) return 0;
+        if (progress >= this.GLOW_START && progress <= this.GLOW_END) {
+            // Calculate how close we are to the peak
+            const distFromPeak = Math.abs(progress - this.GLOW_PEAK);
+            const peakRange = (this.GLOW_END - this.GLOW_START) / 2;
+            return 1 - (distFromPeak / peakRange);
+        }
+        return 0;
+    }
+}; 
