@@ -1,3 +1,7 @@
+:root {
+    --streaker-duration: 2s;
+}
+
 .streaker {
     position: absolute;
     left: 20%;
@@ -9,9 +13,9 @@
     opacity: 0;
     background: #fff;
     animation: 
-        moveStreaker 5s linear infinite,
-        fadeStreaker 5s ease-in-out infinite,
-        glowStreaker 5s ease-in-out infinite !important;
+        moveStreaker var(--streaker-duration) linear infinite,
+        fadeStreaker var(--streaker-duration) ease-in-out infinite,
+        glowStreaker var(--streaker-duration) ease-in-out infinite !important;
 }
 
 .streaker::after {
@@ -24,8 +28,8 @@
     transform: translateY(-50%);
     opacity: 0;
     animation: 
-        trailLength 5s linear infinite,
-        trailFade 5s ease-in-out infinite !important;
+        trailLength var(--streaker-duration) linear infinite,
+        trailFade var(--streaker-duration) ease-in-out infinite !important;
 }
 
 @keyframes moveStreaker {
