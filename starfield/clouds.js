@@ -11,34 +11,30 @@ function createClouds(count) {
         const anomaly = document.querySelector('#current-anomaly');
         const isUncontrolled = uncontrollableTypes.has(anomaly.className);
         
-        // Only move clouds if playing or viewing uncontrolled anomaly
+        // Set or remove transition based on play state
         if (window.isPlaying || isUncontrolled) {
             cloud.style.transition = `left ${driftDuration}s linear`;
         } else {
-            // Pause by removing transition
             cloud.style.transition = 'none';
+            // Capture current position when pausing
+            const currentLeft = getComputedStyle(cloud).left;
+            cloud.style.left = currentLeft;
         }
     }
     
-    function startDriftCycle(cloud, driftDuration, immediate = false) {
+    function startDriftCycle(cloud, driftDuration) {
         const anomaly = document.querySelector('#current-anomaly');
         const isUncontrolled = uncontrollableTypes.has(anomaly.className);
         
         if (window.isPlaying || isUncontrolled) {
-            if (immediate) {
-                // Start drifting from current position
+            // Reset position and start new drift
+            cloud.style.transition = 'none';
+            cloud.style.left = '110%';
+            
+            requestAnimationFrame(() => {
                 updateCloudMovement(cloud, driftDuration);
                 cloud.style.left = '-10%';
-            } else {
-                // Reset and start new drift cycle
-                cloud.style.transition = 'none';
-                cloud.style.left = '110%';
-                
-                setTimeout(() => {
-                    updateCloudMovement(cloud, driftDuration);
-                    cloud.style.left = '-10%';
-                }, 50);
-            }
+            });
         }
     }
     
@@ -57,12 +53,12 @@ function createClouds(count) {
         cloud.style.width = `${width}px`;
         cloud.style.height = `${height}px`;
         
-        // Random initial position that will stay until first reset
-        cloud.style.left = `${Math.random() * 100}%`;
+        // Initial position
+        cloud.style.left = `${Math.random() * 120 - 10}%`;
         cloud.style.top = `${Math.random() * 60 + 10}%`;
         
-        // Random drift speed (30-60s)
-        const driftDuration = Math.random() * 30 + 30;
+        // Slower drift speed (60-120s)
+        const driftDuration = Math.random() * 60 + 60;
         
         container.appendChild(cloud);
         clouds.push({
@@ -70,8 +66,11 @@ function createClouds(count) {
             driftDuration
         });
         
-        // Start initial drift immediately
-        startDriftCycle(cloud, driftDuration, true);
+        // Start initial drift
+        if (window.isPlaying) {
+            updateCloudMovement(cloud, driftDuration);
+            cloud.style.left = '-10%';
+        }
         
         // Set up repeating drift
         setInterval(() => {
@@ -90,12 +89,13 @@ function createClouds(count) {
         const anomaly = document.querySelector('#current-anomaly');
         if (!anomaly.classList.contains('powerup')) return;
 
-        const computedStyle = getComputedStyle(anomaly);
-        const boxShadow = computedStyle.boxShadow;
-        const opacity = parseFloat(computedStyle.opacity);
+        // Calculate current animation progress
+        const currentTime = Date.now();
+        const elapsedTime = (currentTime - animationStartTime) % ANIMATION_DURATION;
+        const progress = elapsedTime / ANIMATION_DURATION;
         
-        const isGlowing = boxShadow !== 'none' && boxShadow.includes('255');
-        const glowIntensity = isGlowing ? opacity : 0;
+        // Get glow intensity from powerup constants with smoother transition
+        const glowIntensity = window.POWERUP_CONSTANTS.getGlowIntensity(progress);
         
         const viewscreen = document.querySelector('.viewscreen');
         const viewscreenRect = viewscreen.getBoundingClientRect();
@@ -124,12 +124,16 @@ function createClouds(count) {
             );
             
             const normalizedDistance = distance / maxDistance;
-            const falloff = Math.pow(Math.max(0, 1 - normalizedDistance), 2);
+            // Smoother falloff curve
+            const falloff = Math.pow(Math.max(0, 1 - normalizedDistance), 1.5);
             
-            // Set both the light position and intensity
+            // Ensure smooth transition at glow boundaries
+            const smoothGlowIntensity = glowIntensity * glowIntensity; // Square for smoother falloff
+            
+            // Set both the light position and intensity with increased brightness
             cloud.style.setProperty('--light-x', `${lightX}%`);
             cloud.style.setProperty('--light-y', `${lightY}%`);
-            cloud.style.setProperty('--illumination', Math.min(1, falloff * glowIntensity));
+            cloud.style.setProperty('--illumination', Math.min(1, falloff * smoothGlowIntensity * 3));
         });
         
         requestAnimationFrame(updateCloudIllumination);

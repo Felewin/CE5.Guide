@@ -25,10 +25,15 @@
     bottom: 0;
     background: radial-gradient(
         circle at var(--light-x) var(--light-y),
-        rgba(255, 255, 255, calc(var(--illumination) * 0.9)) 0%,
+        rgba(255, 255, 255, calc(var(--illumination) * 1.5)) 0%,
         rgba(255, 255, 255, 0) 100%
     );
     mix-blend-mode: screen;
     border-radius: inherit;
-    transition: opacity 0.2s ease;
+    transition: 
+        background 0.4s ease-in-out,
+        background-position 0.4s ease-in-out,
+        --light-x 0.4s ease-in-out,
+        --light-y 0.4s ease-in-out,
+        --illumination 0.4s ease-in-out;
 } 

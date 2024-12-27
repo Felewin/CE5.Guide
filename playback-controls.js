@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
             anomaly.style.animationPlayState = isPlaying ? 'running' : 'paused';
         }
         
+        // Dispatch event to update cloud movement when play state changes
+        document.dispatchEvent(new Event('playStateChanged'));
+        
         if (isPlaying) {
             // When resuming, maintain current progress
             const progressFill = document.querySelector('.progress-fill');
