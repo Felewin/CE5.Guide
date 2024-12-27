@@ -46,12 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const progress = (e.clientX - rect.left) / rect.width;
         const newTime = progress * ANIMATION_DURATION;
         
-        console.log({
-            progress: progress.toFixed(2),
-            newTime: newTime.toFixed(2),
-            'seconds into animation': (newTime / 1000).toFixed(2)
-        });
-        
         // Update animation start time
         animationStartTime = Date.now() - newTime;
         
