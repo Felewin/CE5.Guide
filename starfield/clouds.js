@@ -144,5 +144,8 @@ function createClouds(count) {
 
 // Create clouds when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
-    createClouds(8);
+    // Clouds feature temporarily disabled:
+    // TODO: Fix issue where cloud illumination changes too abruptly when powerup's
+    // glow state changes, despite attempted transition smoothing
+    // createClouds(8);
 }); 
