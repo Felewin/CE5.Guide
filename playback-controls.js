@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const playPauseBtn = document.querySelector('.play-pause-btn');
     const progressContainer = document.querySelector('.progress-container');
+    let isDragging = false;
 
     function togglePlayback() {
         isPlaying = !isPlaying;
@@ -41,9 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    progressContainer.addEventListener('click', (e) => {
+    function updateProgress(e) {
         const rect = progressContainer.getBoundingClientRect();
-        const progress = (e.clientX - rect.left) / rect.width;
+        const progress = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
         const newTime = progress * ANIMATION_DURATION;
         
         // Update animation start time
@@ -52,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update animation
         const anomaly = document.querySelector('#current-anomaly');
         if (anomaly) {
-            // Force animation to start at the clicked percentage
             anomaly.style.animation = 'none';
             anomaly.offsetHeight; // Force reflow
             anomaly.style.animation = '';
@@ -67,7 +67,26 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update progress bar to match
         updateProgressBar();
+    }
+
+    // Handle mouse events for dragging
+    progressContainer.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        updateProgress(e);
     });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            updateProgress(e);
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    // Keep existing click handler for when user just clicks without dragging
+    progressContainer.addEventListener('click', updateProgress);
 
     // Start progress bar
     updateProgressBar();
