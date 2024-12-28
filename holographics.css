@@ -693,14 +693,14 @@ body, html {
 }
 
 .anomaly-specific-info a {
-    color: rgba(120, 220, 255, 0.9);
+    color: rgba(255, 180, 220, 0.9); /* Light pinkish magenta */
     text-decoration: none;
     transition: all 0.3s ease;
 }
 
 .anomaly-specific-info a:hover {
-    color: rgba(120, 220, 255, 1);
-    text-shadow: 0 0 8px rgba(120, 220, 255, 0.4);
+    color: rgba(255, 180, 220, 1); /* Brighter on hover */
+    text-shadow: 0 0 8px rgba(255, 180, 220, 0.4);
 } 
 
 .video-container {
