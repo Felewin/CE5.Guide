@@ -729,3 +729,15 @@ body, html {
     position: relative;     /* Create a new stacking context */
     z-index: 1;            /* Ensure link is above other elements */
 } 
+
+/* Add specific hover state for selected item */
+.select-item.selected:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(64, 255, 248, 0.25) 0%,
+        rgba(64, 255, 248, 0.4) 50%,
+        rgba(64, 255, 248, 0.25) 100%
+    );
+    color: rgba(64, 255, 248, 1);
+    text-shadow: 0 0 12px rgba(64, 255, 248, 0.6);
+} 
