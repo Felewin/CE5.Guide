@@ -469,11 +469,13 @@ body, html {
 .select-item {
     padding: 10px 15px;
     color: rgba(64, 255, 248, 0.9);
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    background: transparent;
+    text-shadow: 0 0 0 transparent;
 }
 
 /* Separate hover and selected states */
@@ -486,6 +488,7 @@ body, html {
     );
     color: rgba(64, 255, 248, 1);
     text-shadow: 0 0 8px rgba(64, 255, 248, 0.3);
+    transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
 .select-item.selected {
