@@ -723,3 +723,9 @@ body, html {
 .hidden {
     display: none;
 } 
+
+.link-wrapper {
+    display: inline-block;  /* Ensure the wrapper doesn't break the text flow */
+    position: relative;     /* Create a new stacking context */
+    z-index: 1;            /* Ensure link is above other elements */
+} 
