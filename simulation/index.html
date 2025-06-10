@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CE-5 Anomaly Simulation</title>
+    <base href="../" />
+    
+    <!-- Essential CSS for night sky and anomalies -->
+    <link rel="stylesheet" href="starfield/starfield.css">
+    <link rel="stylesheet" href="anomalies/anomaly.css">
+    <link rel="stylesheet" href="anomalies/powerup/powerup.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .hologram-wrapper,
+        .holoviewer,
+        .holoviewer-content,
+        .viewscreen,
+        .anomaly-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Hide progress bar elements but keep them in DOM */
+        .progress-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="hologram-wrapper">
+        <div class="holoviewer">
+            <div class="holoviewer-content">
+                <div class="viewscreen">
+                    <div class="anomaly-container">
+                        <div class="powerup" id="current-anomaly"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hidden elements needed by the scripts -->
+    <div class="progress-container" style="display: none;">
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+            <div class="progress-handle"></div>
+        </div>
+    </div>
+
+    <!-- Essential JavaScript in correct order -->
+    <script src="starfield/starfield.js"></script>
+    <script src="anomalies/anomaly-specific-info.js"></script>
+    <script src="anomalies/anomaly-videos.js"></script>
+    <script src="anomalies/anomaly.js"></script>
+    <script src="anomalies/powerup/powerup.js"></script>
+    
+    <script>
+        // Initialize the simulation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-start the powerup anomaly
+            if (typeof window.initializePowerup === 'function') {
+                window.initializePowerup();
+            }
+        });
+    </script>
+</body>
+</html> 
